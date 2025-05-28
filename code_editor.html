@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Web Development Code Editor</title>
+<!-- CodeMirror CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/material-darker.min.css" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: #121212;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  header {
+    background: #1f1f1f;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.7);
+    user-select: none;
+  }
+  #container {
+    flex: 1;
+    display: flex;
+    height: calc(100vh - 52px);
+    overflow: hidden;
+  }
+  #editors {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid #333;
+  }
+  .editor-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid #333;
+  }
+  .editor-section:last-child {
+    border-bottom: none;
+  }
+  .editor-header {
+    padding: 8px 12px;
+    background: #222;
+    font-weight: 600;
+    font-size: 1rem;
+    border-bottom: 1px solid #444;
+  }
+  .CodeMirror {
+    flex: 1;
+    height: 100% !important;
+    background: #263238;
+    color: #fff;
+  }
+  #preview-section {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+  }
+  #preview-header {
+    padding: 8px 12px;
+    background: #222;
+    font-weight: 600;
+    font-size: 1rem;
+    border-bottom: 1px solid #444;
+  }
+  #preview {
+    flex: 1;
+    background: #fff;
+    border: none;
+  }
+  footer {
+    background: #1f1f1f;
+    padding: 0.5rem 1.5rem;
+    text-align: right;
+    box-shadow: 0 -2px 6px rgba(0,0,0,0.7);
+  }
+  button {
+    background: #6200ea;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background: #3700b3;
+  }
+</style>
+</head>
+<body>
+<header>Web Development Code Editor</header>
+<div id="container">
+  <div id="editors">
+    <section class="editor-section">
+      <div class="editor-header">HTML</div>
+      <textarea id="htmlEditor" spellcheck="false"></textarea>
+    </section>
+    <section class="editor-section">
+      <div class="editor-header">CSS</div>
+      <textarea id="cssEditor" spellcheck="false"></textarea>
+    </section>
+    <section class="editor-section" style="border-bottom:none">
+      <div class="editor-header">JavaScript</div>
+      <textarea id="jsEditor" spellcheck="false"></textarea>
+    </section>
+  </div>
+  <div id="preview-section">
+    <div id="preview-header">Live Preview</div>
+    <iframe id="preview" sandbox="allow-scripts allow-same-origin"></iframe>
+  </div>
+</div>
+<footer>
+  <button id="runBtn">Run (Ctrl+Enter)</button>
+  <button id="clearBtn" style="margin-left: 10px; background:#b00020;">Clear</button>
+</footer>
+
+<!-- CodeMirror JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/edit/closebrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/edit/matchbrackets.min.js"></script>
+
+<script>
+  // Initialize CodeMirror editors for HTML, CSS, JS
+  const htmlEditor = CodeMirror.fromTextArea(document.getElementById('htmlEditor'), {
+    mode: "text/html",
+    lineNumbers: true,
+    theme: "material-darker",
+    autoCloseTags: true,
+    matchBrackets: true,
+  });
+  const cssEditor = CodeMirror.fromTextArea(document.getElementById('cssEditor'), {
+    mode: "css",
+    lineNumbers: true,
+    theme: "material-darker",
+    autoCloseBrackets: true,
+    matchBrackets: true,
+  });
+  const jsEditor = CodeMirror.fromTextArea(document.getElementById('jsEditor'), {
+    mode: "javascript",
+    lineNumbers: true,
+    theme: "material-darker",
+    autoCloseBrackets: true,
+    matchBrackets: true,
+  });
+
+  const previewFrame = document.getElementById('preview');
+
+  function updatePreview() {
+    const html = htmlEditor.getValue();
+    const css = cssEditor.getValue();
+    const js = jsEditor.getValue();
+
+    const source = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <style>${css}</style>
+      </head>
+      <body>
+        ${html}
+        <script>
+          try {
+            ${js}
+          } catch(e) {
+            document.body.insertAdjacentHTML('beforeend', '<pre style="color:red; font-weight: bold;">JS Error: ' + e.message + '</pre>');
+            console.error(e);
+          }
+        <\/script>
+      </body>
+      </html>
+    `;
+    const iframeDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+    iframeDoc.open();
+    iframeDoc.write(source);
+    iframeDoc.close();
+  }
+
+  // Run button click updates preview
+  document.getElementById('runBtn').addEventListener('click', updatePreview);
+
+  // Clear button clears all editors and preview
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    htmlEditor.setValue('');
+    cssEditor.setValue('');
+    jsEditor.setValue('');
+    const iframeDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+    iframeDoc.open();
+    iframeDoc.write('');
+    iframeDoc.close();
+  });
+
+  // Update preview live as user types, debounced
+  let typingTimer;
+  function debounceUpdate() {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(updatePreview, 500);
+  }
+  htmlEditor.on('change', debounceUpdate);
+  cssEditor.on('change', debounceUpdate);
+  jsEditor.on('change', debounceUpdate);
+
+  // Keybinding: Ctrl+Enter runs the preview update
+  window.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      updatePreview();
+    }
+  });
+
+  // Initial starter code
+  htmlEditor.setValue(`<!-- Type your HTML here -->\n<h1>Hello, world!</h1>\n<p>Write code and see preview.</p>`);
+  cssEditor.setValue(`/* Type your CSS here */\nbody { font-family: 'Poppins', sans-serif; background-color: #eef; padding: 20px; }\nh1 { color: #6200ea; }`);
+  jsEditor.setValue(`// Type your JavaScript here\nconsole.log('Hello from JavaScript!');`);
+
+  updatePreview(); // Show preview on load
+</script>
+</body>
+</html>
+
