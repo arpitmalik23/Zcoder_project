@@ -11,7 +11,7 @@
   .top_bar{
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-weight: 0px;
-    background-color: antiquewhite;
+    background-color: rgb(245, 245, 210);
     display: flex;
     height: 10vh;
     gap: 30px;
@@ -36,6 +36,18 @@
     gap: 60px;
      
   }
+  .my-button {
+  padding: 10px 20px;
+  
+  color:black;
+  text-decoration: none;
+  border-radius: 5px;
+  display: inline-block;
+  font-weight: bold;
+}
+.my-button:hover {
+  background-color: grey;
+}
  </style>
 
 </head>
@@ -46,20 +58,20 @@
         </div>
         <div class="options">
            <div class="opt1">
-              <p>Home</p>
+              <a href="./home.html" class="my-button">Home</a>
            </div>
            <div class="opt1">
-               <p>Practice</p>
+            <a href="./practice.html" class="my-button">Practice</a>
            </div>
            <div class="opt1">
-               <p>Code Editor</p>
+               <a href="./practice.html" class="my-button">Code Editor</a>
            </div>
            <div class="opt1">
-               <p>Community</p>
+               <a href="./practice.html" class="my-button">Community</a>
            </div>
         </div>
 
   </div>
-  <hr>
+ 
 </body>
 </html>
