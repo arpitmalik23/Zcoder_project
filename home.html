@@ -6,12 +6,60 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Document</title>
   <link rel="stylesheet" href="styles.css"> <!-- Optional external stylesheet -->
+
+ <style>
+  .top_bar{
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 0px;
+    background-color: antiquewhite;
+    display: flex;
+    height: 10vh;
+    gap: 30px;
+
+  }
+   .zcoder_logo{
+    font-size: 60px;
+    display: flex;
+    margin-left: 100px;
+    flex-basis: 200px;
+    justify-content: left;
+    align-items: center;
+  }
+  .options{
+    
+    margin-left: 50px;
+    font-size: 23px;
+    min-width: 600px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 60px;
+     
+  }
+ </style>
+
 </head>
 <body>
+  <div class="top_bar">
+        <div class="zcoder_logo">
+          <p>ZCODER</p>
+        </div>
+        <div class="options">
+           <div class="opt1">
+              <p>Home</p>
+           </div>
+           <div class="opt1">
+               <p>Practice</p>
+           </div>
+           <div class="opt1">
+               <p>Code Editor</p>
+           </div>
+           <div class="opt1">
+               <p>Community</p>
+           </div>
+        </div>
 
-  <h1>Hello, world!</h1>
-  <p>This is a basic HTML5 boilerplate.</p>
-
-  <script src="script.js"></script> <!-- Optional external script -->
+  </div>
+  <hr>
 </body>
 </html>
