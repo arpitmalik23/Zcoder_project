@@ -138,42 +138,14 @@
   from {opacity: .4}
   to {opacity: 1}
 }
+
+.dotbar{
+  margin-left: 200px;
+}
  </style>
 
- <script>
-  let slideIndex = 1;
-showSlides(slideIndex);
-
-// Next/previous controls
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
-
-// Thumbnail image controls
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
-}
-
- </script>
-
 </head>
-<body bgcolor="black">
+<body >
   <div class="top_bar">
         <div class="zcoder_logo">
           <p>ZCODER</p>
@@ -224,12 +196,59 @@ function showSlides(n) {
 <br>
 
 <!-- The dots/circles -->
-<div style="text-align:left">
+<div class="dotbar">
   <span class="dot" onclick="currentSlide(1)"></span>
   <span class="dot" onclick="currentSlide(2)"></span>
   <span class="dot" onclick="currentSlide(3)"></span>
 </div>
 
+<script>
+    let slideIndex = 1;
+    let autoSlide;
+
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active";
+    }
+
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function startAutoSlide() {
+      autoSlide = setInterval(function() {
+        plusSlides(1);
+      }, 5000);
+    }
+
+    function stopAutoSlide() {
+      clearInterval(autoSlide);
+    }
+
+    // Initialize slideshow
+    showSlides(slideIndex);
+    startAutoSlide();
+
+    // Pause on hover
+    const slideshow = document.getElementById('slideshow');
+    slideshow.addEventListener('mouseenter', stopAutoSlide);
+    slideshow.addEventListener('mouseleave', startAutoSlide);
+  </script>
 
 </body>
 </html>
