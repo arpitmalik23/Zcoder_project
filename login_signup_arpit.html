@@ -167,14 +167,53 @@
         console.log(data);
  
 
-      if (data.message === "Login Successful") {
-            window.location.href = "./home.html"; 
-            } else {
-            alert(data.message || "Login failed");
-            }
+      if (data.token) {
+          localStorage.setItem("token", data.token);  // <-- REQUIRED!
+          window.location.href = "./home.html";
+        } else {
+          alert(data.message || "Login failed");
+        }
+
 
 
     }
+    // Example for login.js ---- token fetching for profile
+    
+          // document.addEventListener("DOMContentLoaded", function () {
+          //   const token = localStorage.getItem("token");
+
+          //   if (!token) {
+          //     alert("You must be logged in");
+          //     window.location.href = "/login_signup_arpit.html";
+          //     return;
+          //   }
+
+          //   fetch("http://localhost:5000/api/user/profile", {
+          //     method: "GET",
+          //     headers: {
+          //       Authorization: `Bearer ${token}`, // Send token in header
+          //     },
+          //   })
+          //     .then((res) => {
+          //       if (res.status === 401 || res.status === 403) {
+          //         throw new Error("Not authorized");
+          //       }
+          //       return res.json();
+          //     })
+          //     .then((user) => {
+          //       document.getElementById("name").textContent = user.name;
+          //       document.getElementById("email").textContent = user.email;
+          //       if (user.image) {
+          //         document.getElementById("profile-img").src = `/uploads/${user.image}`;
+          //       }
+          //     })
+          //     .catch((err) => {
+          //       console.error("Auth error:", err);
+          //       alert("You must be logged in");
+          //       window.location.href = "/login_signup_arpit.html";
+          //     });
+          // });
+
   </script>
 </body>
 </html>

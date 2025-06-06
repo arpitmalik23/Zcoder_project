@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Profile - ZCoder</title>
+  <style>
+    body {
+      background: #1e1e2f;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .profile-container {
+      background: #2a2a3b;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      width: 400px;
+    }
+    h2 {
+      text-align: center;
+      color: #00ffe7;
+    }
+    .profile-pic {
+      display: block;
+      margin: 20px auto;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #00ffe7;
+    }
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      background: #444;
+      color: #fff;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #00ffe7;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .logout {
+      margin-top: 20px;
+      background: #ff4d4d;
+      color: #fff;
+    }
+    .info {
+      text-align: center;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <h2>My Profile</h2>
+    <img id="profileImage" class="profile-pic" src="" alt="Profile Picture">
+    <div class="info"><strong>Email:</strong> <span id="emailDisplay"></span></div>
+
+    <input type="text" id="nameInput" placeholder="Enter new name" />
+    <input type="file" id="imageInput" accept="image/*" />
+    <button onclick="updateProfile()">Update Profile</button>
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("You must be logged in.");
+      window.location.href = "login_signup_arpit.html";
+    }
+
+    async function loadProfile() {
+      const res = await fetch("http://localhost:5000/api/profile", {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + token,
+        },
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        document.getElementById("emailDisplay").textContent = data.email;
+        document.getElementById("nameInput").value = data.name || "";
+        document.getElementById("profileImage").src = data.profileImage || "https://via.placeholder.com/100";
+      } else {
+        alert(data.message || "Failed to load profile");
+        window.location.href = "login_signup_arpit.html";
+      }
+    }
+
+    async function updateProfile() {
+      const name = document.getElementById("nameInput").value;
+      const imageInput = document.getElementById("imageInput");
+      const formData = new FormData();
+      formData.append("name", name);
+      if (imageInput.files[0]) {
+        formData.append("profileImage", imageInput.files[0]);
+      }
+
+      const res = await fetch("http://localhost:5000/api/profile", {
+        method: "PUT",
+        headers: {
+          "Authorization": "Bearer " + token,
+        },
+        body: formData,
+      });
+
+      const data = await res.json();
+      alert(data.message || "Profile updated");
+      if (res.ok) loadProfile();
+    }
+
+    function logout() {
+      localStorage.removeItem("token");
+      window.location.href = "login_signup_arpit.html";
+    }
+
+    loadProfile();
+  </script>
+</body>
+</html>
