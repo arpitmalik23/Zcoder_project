@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { authenticateToken } = require('../middleware/authMiddleware');
-const Post = require('../models/Post'); // Make sure this model exists
+const Post = require('../models/Post'); 
 
 // Get all posts (no authentication needed)
 router.get('/', async (req, res) => {
   try {
-    const posts = await Post.find().populate('author', 'username');
+    const posts = await Post.find().populate('author', 'name');
     res.json(posts);
   } catch (err) {
     console.error(err);
