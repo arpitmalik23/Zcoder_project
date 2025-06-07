@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ZCoder Practice Problems</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    h2 {
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      background-color: #007bff;
+      color: white;
+    }
+
+    .top_bar {
+      font-family:'Lucida Sans', sans-serif;
+      background-color: rgb(245, 245, 210);
+      display: flex;
+      height: 10vh;
+      gap: 30px;
+    }
+
+    .zcoder_logo {
+      font-size: 60px;
+      display: flex;
+      margin-left: 100px;
+      flex-basis: 200px;
+      justify-content: left;
+      align-items: center;
+    }
+
+    .options {
+      margin-left: 50px;
+      font-size: 23px;
+      min-width: 600px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .my-button {
+      padding: 10px 20px;
+      color: black;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .my-button:hover {
+      background-color: grey;
+    }
+
+    .problem-list {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .problem {
+      padding: 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .problem:last-child {
+      border-bottom: none;
+    }
+
+    .problem a {
+      text-decoration: none;
+      color: #007bff;
+      font-size: 18px;
+    }
+
+    .problem a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top_bar">
+    <div class="zcoder_logo">
+      <p>ZCODER</p>
+    </div>
+    <div class="options">
+      <div class="opt1"><a href="./home.html" class="my-button">Home</a></div>
+      <div class="opt1"><a href="./practice.html" class="my-button">Practice</a></div>
+      <div class="opt1"><a href="./editor.html" class="my-button">Code Editor</a></div>
+      <div class="opt1"><a href="./community.html" class="my-button">Community</a></div>
+    </div>
+  </div>
+
+  <h2>Practice Problems</h2>
+
+  <div class="problem-list">
+    <div class="problem">
+      <a href="problems/problem1.html" target="_blank">1. Two Sum Problem</a>
+    </div>
+    <div class="problem">
+      <a href="problems/problem2.html" target="_blank">2. Reverse a Linked List</a>
+    </div>
+    <div class="problem">
+      <a href="problems/problem3.html" target="_blank">3. Valid Parentheses</a>
+    </div>
+    <div class="problem">
+      <a href="problems/problem4.html" target="_blank">4. Merge Sort</a>
+    </div>
+    <div class="problem">
+      <a href="problems/problem5.html" target="_blank">5. Longest Common Subsequence</a>
+    </div>
+  </div>
+
+</body>
+</html>
