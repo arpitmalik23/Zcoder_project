@@ -136,84 +136,69 @@
       }
     }
 
+    async function handleLogin(event) {
+      event.preventDefault();
+
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+
+      try {
+        const res = await fetch('http://localhost:5000/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error('Login failed:', res.status, errorText);
+          alert("Login failed: " + res.status);
+          return;
+        }
+
+        const data = await res.json();
+        console.log(data);
+
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          window.location.href = "./home.html";
+        } else {
+          alert(data.message || "Login failed");
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+        alert("Something went wrong while logging in.");
+      }
+    }
+
     async function handleSignup(event) {
       event.preventDefault();
       const name = document.getElementById('signupName').value;
       const email = document.getElementById('signupEmail').value;
       const password = document.getElementById('signupPassword').value;
 
-      const res = await fetch("/api/login", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password })
-      });
+      try {
+        const res = await fetch('http://localhost:5000/api/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password })
+        });
 
-      const data = await res.json();
-      alert(data.message || data.msg || "Signup done");
-    }
-
-    async function handleLogin(event) {
-      event.preventDefault();
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-
-      const res = await fetch("/api/login", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-
-      const data = await res.json();
-        console.log(data);
- 
-
-      if (data.token) {
-          localStorage.setItem("token", data.token);  // <-- REQUIRED!
-          window.location.href = "./home.html";
-        } else {
-          alert(data.message || "Login failed");
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error('Signup failed:', res.status, errorText);
+          alert("Signup failed: " + res.status);
+          return;
         }
 
-
-
+        const data = await res.json();
+        alert(data.message || "Signup successful! Please login.");
+        switchTab('login');
+      } catch (error) {
+        console.error("Fetch error:", error);
+        alert("Something went wrong while signing up.");
+      }
     }
-    // Example for login.js ---- token fetching for profile
-    
-          // document.addEventListener("DOMContentLoaded", function () {
-          //   const token = localStorage.getItem("token");
-
-          //   if (!token) {
-          //     alert("You must be logged in");
-          //     window.location.href = "/login_signup_arpit.html";
-          //     return;
-          //   }
-
-          //   fetch("http://localhost:5000/api/user/profile", {
-          //     method: "GET",
-          //     headers: {
-          //       Authorization: `Bearer ${token}`, // Send token in header
-          //     },
-          //   })
-          //     .then((res) => {
-          //       if (res.status === 401 || res.status === 403) {
-          //         throw new Error("Not authorized");
-          //       }
-          //       return res.json();
-          //     })
-          //     .then((user) => {
-          //       document.getElementById("name").textContent = user.name;
-          //       document.getElementById("email").textContent = user.email;
-          //       if (user.image) {
-          //         document.getElementById("profile-img").src = `/uploads/${user.image}`;
-          //       }
-          //     })
-          //     .catch((err) => {
-          //       console.error("Auth error:", err);
-          //       alert("You must be logged in");
-          //       window.location.href = "/login_signup_arpit.html";
-          //     });
-          // });
-
   </script>
 </body>
 </html>
