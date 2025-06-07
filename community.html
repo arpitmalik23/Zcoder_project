@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Community Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #0077b6;
+      color: #fff;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      padding: 2rem;
+    }
+    h2 {
+      margin-top: 0;
+    }
+    .post-list {
+      list-style: none;
+      padding: 0;
+    }
+    .post {
+      border-bottom: 1px solid #eee;
+      padding: 1rem 0;
+    }
+    .post:last-child {
+      border-bottom: none;
+    }
+    .post-author {
+      font-weight: bold;
+      color: #0077b6;
+    }
+    form {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    input, textarea {
+      padding: 0.7rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button {
+      background: #0077b6;
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #023e8a;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to Our Community!</h1>
+    <p>Connect, share, and grow together.</p>
+  </header>
+  <div class="container">
+    <h2>Community Posts</h2>
+    <ul class="post-list" id="postList">
+      <li class="post">
+        <span class="post-author">Alice</span>: Excited to join this community!
+      </li>
+      <li class="post">
+        <span class="post-author">Bob</span>: Looking forward to learning from everyone.
+      </li>
+    </ul>
+    <form id="postForm">
+      <h3>Share Something</h3>
+      <input type="text" id="author" placeholder="Your Name" required>
+      <textarea id="message" placeholder="What's on your mind?" rows="3" required></textarea>
+      <button type="submit">Post</button>
+    </form>
+  </div>
+  <script>
+    const postForm = document.getElementById('postForm');
+    const postList = document.getElementById('postList');
+    postForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const author = document.getElementById('author').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if(author && message) {
+        const li = document.createElement('li');
+        li.className = 'post';
+        li.innerHTML = `<span class="post-author">${author}</span>: ${message}`;
+        postList.appendChild(li);
+        postForm.reset();
+      }
+    });
+  </script>
+</body>
+</html>
