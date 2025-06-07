@@ -11,16 +11,12 @@ router.post("/signup", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Check if user already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create and save user
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
 
@@ -36,20 +32,17 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // Create and send JWT
-    const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ email: user.email, id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
@@ -60,9 +53,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-module.exports = router;
-
-// GET /api/profile
+// ===== Protected Profile Route =====
 router.get("/profile", authenticateToken, async (req, res) => {
   try {
     const user = await User.findOne({ email: req.user.email }).select("-password");
@@ -74,10 +65,5 @@ router.get("/profile", authenticateToken, async (req, res) => {
   }
 });
 
-
-
-
-
-
-
+module.exports = router; // ✅ Must be at the bottom
 

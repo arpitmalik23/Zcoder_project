@@ -25,6 +25,8 @@ app.use(cors());
 app.use("/api", require("./routes/auth"));
 app.use("/api", require("./routes/user"));
 
+const postRoutes = require('./routes/posts');
+app.use('/api/posts', postRoutes);
 
 
 mongoose.connect(process.env.MONGO_URI, {

@@ -1,24 +1,34 @@
 const express = require('express');
 const router = express.Router();
-const Post = require('../models/post');
-const auth = require('../middleware/authMiddleware');
+const { authenticateToken } = require('../middleware/authMiddleware');
+const Post = require('../models/Post'); // Make sure this model exists
 
-// Get all posts
+// Get all posts (no authentication needed)
 router.get('/', async (req, res) => {
-  const posts = await Post.find().populate('author', 'username email');
-  res.json(posts);
+  try {
+    const posts = await Post.find().populate('author', 'username');
+    res.json(posts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Server error" });
+  }
 });
 
-// Create post - protected
-router.post('/', auth, async (req, res) => {
-  const { title, content } = req.body;
-
-  const newPost = new Post({
-    title,
-    content,
-    author: req.user.id // comes from JWT
-  });
-
-  await newPost.save();
-  res.json(newPost);
+// Create a new post (requires authentication)
+router.post('/', authenticateToken, async (req, res) => {
+  const { content, title } = req.body;
+  try {
+    const newPost = new Post({
+      content,
+      title,
+      author: req.user.id, // req.user is set by authenticateToken
+    });
+    await newPost.save();
+    res.status(201).json(newPost);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Failed to create post" });
+  }
 });
+
+module.exports = router;
