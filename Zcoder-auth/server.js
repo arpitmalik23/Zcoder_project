@@ -21,12 +21,27 @@ dotenv.config();
 
 
 app.use(express.json());
-app.use(cors());
+
+const allowedOrigins = ["http://localhost:5500", "http://127.0.0.1:3000"];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+}));
+
+
 app.use("/api", require("./routes/auth"));
 app.use("/api", require("./routes/user"));
 
 const postRoutes = require('./routes/posts');
 app.use('/api/posts', postRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 
 mongoose.connect(process.env.MONGO_URI, {
