@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Problem 1 - Add Two Numbers</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    .top_bar {
+      font-family: 'Lucida Sans', sans-serif;
+      background-color: rgb(245, 245, 210);
+      display: flex;
+      height: 10vh;
+      gap: 30px;
+    }
+
+    .zcoder_logo {
+      font-size: 60px;
+      margin-left: 100px;
+      flex-basis: 200px;
+      display: flex;
+      justify-content: left;
+      align-items: center;
+    }
+
+    .options {
+      margin-left: 50px;
+      font-size: 23px;
+      min-width: 600px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .my-button {
+      padding: 10px 20px;
+      color: black;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .my-button:hover {
+      background-color: grey;
+    }
+
+    .container {
+      display: flex;
+      height: calc(100vh - 10vh);
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .left, .right {
+      flex: 1;
+      padding: 10px;
+    }
+
+    .left {
+      padding-right: 20px;
+    }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+    }
+
+    select {
+      font-size: 16px;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: vertical;
+      height: 50%;
+      margin-bottom: 10px;
+    }
+
+    button {
+      align-self: flex-start;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #result {
+      font-size: 18px;
+      font-weight: bold;
+      color: black;
+    }
+
+    pre {
+      background-color: rgb(245, 245, 210);
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="top_bar">
+    <div class="zcoder_logo">
+      <p>ZCODER</p>
+    </div>
+    <div class="options">
+      <a href="./home.html" class="my-button">Home</a>
+      <a href="./practice.html" class="my-button">Practice</a>
+      <a href="./editor.html" class="my-button">Code Editor</a>
+      <a href="./community.html" class="my-button">Community</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Left Panel: Problem -->
+    <div class="left">
+      <h2>Problem 1: Add Two Numbers</h2>
+      <p><strong>Description:</strong> Write a program that takes two integers as input and prints their sum.</p>
+      <p><strong>Input:</strong> Two space-separated integers</p>
+      <p><strong>Output:</strong> Their sum</p>
+      <pre><strong>Sample Input:</strong> 2 3
+<strong>Expected Output:</strong> 5</pre>
+    </div>
+
+    <!-- Right Panel: Code + Result -->
+    <div class="right">
+      <label for="language">Select Language:</label>
+      <select id="language" onchange="setDefaultCode()">
+        <option value="cpp">C++</option>
+        <option value="python3">Python 3</option>
+        <option value="java">Java</option>
+        <option value="javascript">JavaScript</option>
+      </select>
+
+      <textarea id="code" placeholder="Write your code here..."></textarea>
+      <button onclick="runCode()">Run Code</button>
+      <div id="result">Result will appear here...</div>
+    </div>
+  </div>
+
+  <script>
+    const testCaseInput = "2 3";
+    const expectedOutput = "5";
+
+    const languageVersions = {
+      cpp: "10.2.0",
+      python3: "3.10.0",
+      java: "15.0.2",
+      javascript: "16.3.0"
+    };
+
+    async function runCode() {
+      const language = document.getElementById("language").value;
+      const code = document.getElementById("code").value;
+      const resultElem = document.getElementById("result");
+      resultElem.textContent = "Running...";
+
+      try {
+        const response = await fetch("https://emkc.org/api/v2/piston/execute", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            language: language,
+            version: languageVersions[language],
+            files: [{ content: code }],
+            stdin: testCaseInput
+          })
+        });
+
+        const result = await response.json();
+        const output = result.run.output.trim();
+
+        if (output === expectedOutput) {
+          resultElem.textContent = "✅ Correct";
+          resultElem.style.color = "green";
+        } else {
+          resultElem.textContent = "❌ Wrong";
+          resultElem.style.color = "red";
+        }
+      } catch (err) {
+        resultElem.textContent = "Error: " + err;
+        resultElem.style.color = "red";
+      }
+    }
+
+    function setDefaultCode() {
+      document.getElementById("code").value = ""; // Start with empty editor
+    }
+
+    window.onload = setDefaultCode;
+  </script>
+</body>
+</html>
