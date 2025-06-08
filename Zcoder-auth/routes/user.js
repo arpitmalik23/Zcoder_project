@@ -56,7 +56,7 @@ router.put("/profile", authenticateToken, upload.single("image"), async (req, re
 
     const updateData = {};
     if (name) updateData.name = name;
-    if (image) updateData.profileImage = image; // store only filename
+    if (image) updateData.profileImage = image;
 
     const updatedUser = await User.findOneAndUpdate(
       { email },
@@ -69,15 +69,16 @@ router.put("/profile", authenticateToken, upload.single("image"), async (req, re
     const profileImage = updatedUser.profileImage
       ? `http://localhost:5000/uploads/${updatedUser.profileImage}`
       : null;
-
+         console.log(updatedUser.profileImage);
     res.json({
-      message: "Profile updated",
+      message: 'Profile updated',
       user: {
-        name: updatedUser.name,
         email: updatedUser.email,
-        profileImage,
+        name: updatedUser.name,
+        profileImage
       }
     });
+
   } catch (err) {
     console.error("PUT /api/profile error:", err);
     res.status(500).json({ message: "Server error" });

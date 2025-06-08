@@ -103,7 +103,7 @@
     <div class="options">
       <a href="./home.html" class="my-button">Home</a>
       <a href="./practice.html" class="my-button">Practice</a>
-      <a href="./editor.html" class="my-button">Code Editor</a>
+      <a href="./code_editor_arpit.html" class="my-button">Code Editor</a>
       <a href="./community.html" class="my-button">Community</a>
     </div>
   </div>
@@ -127,6 +127,8 @@
     }
 
     async function loadProfile() {
+    
+
       try {
         const res = await fetch("http://localhost:5000/api/profile", {
           method: "GET",
@@ -181,13 +183,15 @@
         }
 
         alert(data.message || "Profile updated");
-
-        // Update UI with new data
+          
+       
+       
         document.getElementById("nameInput").value = data.user.name || "";
         document.getElementById("emailDisplay").textContent = data.user.email;
         const updatedImage = data.user.profileImage || "./th.jpeg";
         document.getElementById("profileImage").src = updatedImage + `?t=${Date.now()}`;
         imageInput.value = "";
+         
 
       } catch (err) {
         console.error("Update error:", err);
@@ -200,6 +204,8 @@
       window.location.href = "login_signup_arpit.html";
     }
 
+    console.log("✅ ZCoder Profile JS is running");
+    
     loadProfile();
   </script>
 

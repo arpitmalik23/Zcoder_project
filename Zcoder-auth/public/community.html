@@ -103,7 +103,7 @@
         posts.reverse().forEach(post => {
           const li = document.createElement('li');
           li.className = 'post';
-          li.innerHTML = `<span class="post-author">${post.author?.name || "Anonymous"}</span>: ${post.content}`;
+          li.innerHTML = `<span class="post-author">${post.author?.name }</span>: ${post.content}`;
           postList.appendChild(li);
         });
       } catch (err) {
