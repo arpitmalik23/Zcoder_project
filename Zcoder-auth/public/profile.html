@@ -127,30 +127,45 @@
     }
 
     async function loadProfile() {
-    
+        try {
+          const res = await fetch("http://localhost:5000/api/profile", {
+            method: "GET",
+            headers: { "Authorization": "Bearer " + token },
+          });
 
-      try {
-        const res = await fetch("http://localhost:5000/api/profile", {
-          method: "GET",
-          headers: { "Authorization": "Bearer " + token },
-        });
+          const contentType = res.headers.get("content-type");
+          let data;
 
-        const data = await res.json();
+          if (contentType && contentType.includes("application/json")) {
+            data = await res.json();
+          } else {
+            const text = await res.text();
+            console.error("Profile response is not JSON:", text);
+            alert("Unexpected profile response:\n" + text);
+            return;
+          }
 
-        if (res.ok) {
-          document.getElementById("emailDisplay").textContent = data.email;
-          document.getElementById("nameInput").value = data.name || "";
-          const profileImage = data.profileImage || "./th.jpeg";
-          document.getElementById("profileImage").src = profileImage + `?t=${Date.now()}`;
-        } else {
-          alert(data.message || "Failed to load profile");
-          window.location.href = "login_signup_arpit.html";
+          console.log("Profile loaded:", data); // ✅ Add this
+
+          if (res.ok) {
+            document.getElementById("emailDisplay").textContent = data.email;
+            document.getElementById("nameInput").value = data.name || "";
+            const profileImage = data.profileImage
+                ? `http://localhost:5000/uploads/${data.profileImage}`
+                : "./th.jpeg";
+              document.getElementById("profileImage").src = profileImage + `?t=${Date.now()}`;
+
+
+          } else {
+            alert(data.message || "Failed to load profile");
+            window.location.href = "login_signup_arpit.html";
+          }
+        } catch (err) {
+          console.error("Load profile error:", err);
+          alert("Failed to fetch profile.");
         }
-      } catch (err) {
-        console.error("Load profile error:", err);
-        alert("Failed to fetch profile.");
       }
-    }
+
 
     async function updateProfile() {
       const name = document.getElementById("nameInput").value;

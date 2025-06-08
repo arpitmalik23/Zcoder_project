@@ -30,15 +30,19 @@ router.get("/profile", authenticateToken, async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Safely construct full image URL if available
-    const profileImage = user.profileImage
-      ? `http://localhost:5000/uploads/${user.profileImage}`
+    const BASE_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://your-production-domain.com' 
+  : 'http://localhost:5000';
+  
+   const profileImage = user.profileImage
+      ? `/uploads/${user.profileImage}`  // ← Relative path
       : null;
 
-    res.json({
-      name: user.name,
-      email: user.email,
-      profileImage,
-    });
+      res.json({
+        name: user.name,
+        email: user.email,
+        profileImage
+      });
   } catch (err) {
     console.error("GET /api/profile error:", err);
     res.status(500).json({ message: "Server error" });
@@ -67,17 +71,18 @@ router.put("/profile", authenticateToken, upload.single("image"), async (req, re
     if (!updatedUser) return res.status(404).json({ message: "User not found" });
 
     const profileImage = updatedUser.profileImage
-      ? `http://localhost:5000/uploads/${updatedUser.profileImage}`
+      ? `/uploads/${updatedUser.profileImage}`  // ← Relative path
       : null;
-         console.log(updatedUser.profileImage);
-    res.json({
-      message: 'Profile updated',
-      user: {
-        email: updatedUser.email,
-        name: updatedUser.name,
-        profileImage
-      }
-    });
+
+        res.json({
+          message: 'Profile updated',
+          user: {
+            email: updatedUser.email,
+            name: updatedUser.name,
+            profileImage: profileImage
+          }
+        });
+
 
   } catch (err) {
     console.error("PUT /api/profile error:", err);
