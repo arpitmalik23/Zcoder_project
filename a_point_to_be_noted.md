@@ -1,0 +1,1 @@
+currently we are running this server locally on the local host when we make this live then we will be able to pass posts and comment across platform we are sorry for this inconvenience hope you understand the time shortage 
