@@ -5,220 +5,271 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Document</title>
- 
-
- <style>
-  .top_bar{
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-weight: 0px;
-    background-color: rgb(245, 245, 210);
-    display: flex;
-    height: 15vh;
-    gap: 30px;
-
-  }
-   .zcoder_logo{
-    font-size: 60px;
-    display: flex;
-    margin-left: 100px;
-    flex-basis: 200px;
-    justify-content: left;
-    align-items: center;
-  }
-  .options{
-    
-    margin-left: 50px;
-    font-size: 23px;
-    min-width: 600px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 60px;
-     
-  }
-  .my-button {
-  padding: 10px 20px;
-  
-  color:black;
-  text-decoration: none;
-  border-radius: 5px;
-  display: inline-block;
-  font-weight: bold;
-}
-
-.my-button:hover {
-  background-color: grey;
-}
-
-* {box-sizing:border-box}
-
-/* Slideshow container */
-.slideshow-container {
-  width: 500px;
-  position: relative;
-  margin-left: 0; /* Align to the left */
-  margin-right: auto;
-}
-
-/* Hide the images by default */
-.mySlides {
-  display: none;
-}
-
-/* Next & previous buttons */
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  margin-top: -22px;
-  padding: 16px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
-}
-
-/* Position the "next button" to the right */
-.next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
-}
-
-/* On hover, add a black background color with a little bit see-through */
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
-}
-
-/* Caption text */
-.text {
-  color: #f2f2f2;
-  font-size: 15px;
-  padding: 8px 12px;
-  position: absolute;
-  bottom: 8px;
-  width: 100%;
-  text-align: center;
-}
-
-/* Number text (1/3 etc) */
-.numbertext {
-  color: #f2f2f2;
-  font-size: 12px;
-  padding: 8px 12px;
-  position: absolute;
-  top: 0;
-}
-
-/* The dots/bullets/indicators */
-.dot {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease;
-}
-
-.active, .dot:hover {
-  background-color: #717171;
-}
-
-/* Fading animation */
-.fade {
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
-
-@keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
-}
-
-.dotbar{
-  margin-left: 200px;
-}
-.profile-icon {
-  width: 62px;    /* Adjust size as needed */
-  height: 62px;
-  object-fit: cover;
-  border-radius: 50%; /* Makes it circular if image is square */
-}
- </style>
-
+  <style>
+    .top_bar{
+      font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-weight: 0px;
+      background-color: rgb(245, 245, 210);
+      display: flex;
+      height: 15vh;
+      gap: 30px;
+    }
+    .zcoder_logo{
+      font-size: 60px;
+      display: flex;
+      margin-left: 100px;
+      flex-basis: 200px;
+      justify-content: left;
+      align-items: center;
+    }
+    .options{
+      margin-left: 50px;
+      font-size: 23px;
+      min-width: 600px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 60px;
+    }
+    .my-button {
+      padding: 10px 20px;
+      color:black;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+      font-weight: bold;
+    }
+    .my-button:hover {
+      background-color: grey;
+    }
+    * {box-sizing:border-box}
+    .slideshow-container {
+      width: 500px;
+      position: relative;
+      margin-left: 0;
+      margin-right: auto;
+    }
+    .mySlides {
+      display: none;
+    }
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      margin-top: -22px;
+      padding: 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.6s ease;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+    }
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+    .prev:hover, .next:hover {
+      background-color: rgba(0,0,0,0.8);
+    }
+    .text {
+      color: #f2f2f2;
+      font-size: 15px;
+      padding: 8px 12px;
+      position: absolute;
+      bottom: 8px;
+      width: 100%;
+      text-align: center;
+    }
+    .numbertext {
+      color: #f2f2f2;
+      font-size: 12px;
+      padding: 8px 12px;
+      position: absolute;
+      top: 0;
+    }
+    .dot {
+      cursor: pointer;
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+    .active, .dot:hover {
+      background-color: #717171;
+    }
+    .fade {
+      animation-name: fade;
+      animation-duration: 1.5s;
+    }
+    @keyframes fade {
+      from {opacity: .4}
+      to {opacity: 1}
+    }
+    .dotbar{
+      margin-left: 200px;
+    }
+    .profile-icon {
+      width: 62px;
+      height: 62px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .slideshow-tips-container {
+      display: flex;
+      justify-content: center;
+      margin: 20px 100px 0;
+      gap: 30px;
+      align-items: flex-start;
+    }
+    .tips-sidebar {
+      flex: 1;
+      max-width: 400px;
+      background-color: #f5f5d2;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .testimonials-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin-top: 20px;
+      gap: 20px;
+    }
+    .testimonial-card {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      max-width: 250px;
+      flex: 1 1 250px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
-<body >
+<body>
   <div class="top_bar">
-        <div class="zcoder_logo">
-          <p>ZCODER</p>
-        </div>
-        <div class="options">
-           <div class="opt1">
-              <a href="./home.html" class="my-button">Home</a>
-           </div>
-           <div class="opt1">
-            <a href="./practice.html" class="my-button">Practice</a>
-           </div>
-           <div class="opt1">
-               <a href="./code_editor_arpit.html" class="my-button">Code Editor</a>
-           </div>
-           <div class="opt1">
-               <a href="./community.html" class="my-button">Commmunity</a>
-           </div>
-           <div class="Profile-button">
-              <a href="./profile.html" class="my-button">
-                <img src="./th.jpeg" alt="P" class="profile-icon" />
-              Profile</a>
-            </div>
-        </div>
-
+    <div class="zcoder_logo">
+      <p>ZCODER</p>
+    </div>
+    <div class="options">
+      <div class="opt1">
+        <a href="./home.html" class="my-button">Home</a>
+      </div>
+      <div class="opt1">
+        <a href="./practice.html" class="my-button">Practice</a>
+      </div>
+      <div class="opt1">
+        <a href="./code_editor_arpit.html" class="my-button">Code Editor</a>
+      </div>
+      <div class="opt1">
+        <a href="./community.html" class="my-button">Commmunity</a>
+      </div>
+      <div class="Profile-button">
+        <a href="./profile.html" class="my-button">
+          <img src="./th.jpeg" alt="P" class="profile-icon" />
+          Profile
+        </a>
+      </div>
+    </div>
   </div>
 
-
-  <div class="slideshow-container">
-
-  <!-- Full-width images with number and caption text -->
-
-  <div class="mySlides fade">
-    <div class="numbertext">1 / 3</div>
-    <img src="dnd-random-mountain-encounters.jpg" style="width:100%">
-    <div class="text">Caption Text</div>
+  <div style="font-family: 'Lucida Sans', sans-serif; font-size: 24px; margin: 30px 100px 0; color: #333;">
+    Welcome to Zcoder – Where Coding Problems Meet Practice!
   </div>
 
-  <div class="mySlides fade">
-    <div class="numbertext">2 / 3</div>
-    <img src="jqh4az6kytjy.jpg" width="500px" >
-    <div class="text">Caption Two</div>
+  <div class="slideshow-tips-container">
+    <div class="slideshow-container">
+      <div class="mySlides fade">
+        <div class="numbertext">1 / 3</div>
+        <img src="dnd-random-mountain-encounters.jpg" style="width:100%">
+        <div class="text">Caption Text</div>
+      </div>
+      <div class="mySlides fade">
+        <div class="numbertext">2 / 3</div>
+        <img src="jqh4az6kytjy.jpg" width="500px">
+        <div class="text">Caption Two</div>
+      </div>
+      <div class="mySlides fade">
+        <div class="numbertext">3 / 3</div>
+        <img src="th.jpg" style="width:100%">
+        <div class="text">Caption Three</div>
+      </div>
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    
+    <div class="tips-sidebar">
+      <h3 style="color: #333;">Latest Tips</h3>
+      <ul style="font-size: 16px;">
+        <li>Start with easy problems and gradually increase difficulty.</li>
+        <li>Participate in weekly challenges to track your progress.</li>
+        <li>Join discussions in the community forum!</li>
+        <li>Don’t be afraid to ask for help—everyone starts somewhere.</li>
+        <li>Review your code regularly to spot patterns and improve.</li>
+        <li>Celebrate small victories—they add up!</li>
+      </ul>
+    </div>
   </div>
 
-  <div class="mySlides fade">
-    <div class="numbertext">3 / 3</div>
-    <img src="th.jpg" style="width:100%">
-    <div class="text">Caption Three</div>
+  <div class="dotbar">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
   </div>
 
-  <!-- Next and previous buttons -->
-  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-  <a class="next" onclick="plusSlides(1)">&#10095;</a>
-</div>
-<br>
+  <div style="font-family: 'Lucida Sans', sans-serif; margin: 40px 100px; background-color: #f5f5d2; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <h2 style="text-align: center; color: #333;">Why Choose Zcoder?</h2>
+    <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+      <div style="text-align: center; max-width: 200px;">
+        <p style="font-size: 18px;">Practice Coding Problems</p>
+      </div>
+      <div style="text-align: center; max-width: 200px;">
+        <p style="font-size: 18px;">Sharpen Your Skills</p>
+      </div>
+      <div style="text-align: center; max-width: 200px;">
+        <p style="font-size: 18px;">Join a Coding Community</p>
+      </div>
+    </div>
+  </div>
 
-<!-- The dots/circles -->
-<div class="dotbar">
-  <span class="dot" onclick="currentSlide(1)"></span>
-  <span class="dot" onclick="currentSlide(2)"></span>
-  <span class="dot" onclick="currentSlide(3)"></span>
-</div>
+  <div style="font-family: 'Lucida Sans', sans-serif; margin: 40px 100px; background-color: #f5f5d2; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <h2 style="text-align: center; color: #333;">What Others Say</h2>
+    <div class="testimonials-container">
+      <div class="testimonial-card">
+        <p style="font-style: italic;">"Zcoder helped me land my first internship!"</p>
+        <p>- Rahul, Student</p>
+      </div>
+      <div class="testimonial-card">
+        <p style="font-style: italic;">"The practice problems are top-notch."</p>
+        <p>- Priya, Developer</p>
+      </div>
+      <div class="testimonial-card">
+        <p style="font-style: italic;">"I improved my coding skills faster than I thought possible. The community support is amazing!"</p>
+        <p>- Anil, Aspiring Coder</p>
+      </div>
+      <div class="testimonial-card">
+        <p style="font-style: italic;">"Weekly challenges keep me motivated and help me track my progress."</p>
+        <p>- Maya, College Student</p>
+      </div>
+      <div class="testimonial-card">
+        <p style="font-style: italic;">"I love the variety of problems and the helpful tips. Zcoder is my go-to for practice!"</p>
+        <p>- Vikram, Software Engineer</p>
+      </div>
+    </div>
+  </div>
 
-<script>
+  <div style="font-family: 'Lucida Sans', sans-serif; background-color: #f5f5d2; color: #333; text-align: center; padding: 20px; margin-top: 40px;">
+    &copy; 2025 Zcoder. All rights reserved.
+  </div>
+
+  <script>
     let slideIndex = 1;
     let autoSlide;
-
     function showSlides(n) {
       let i;
       let slides = document.getElementsByClassName("mySlides");
@@ -234,42 +285,22 @@
       slides[slideIndex-1].style.display = "block";
       dots[slideIndex-1].className += " active";
     }
-
     function plusSlides(n) {
       showSlides(slideIndex += n);
     }
-
     function currentSlide(n) {
       showSlides(slideIndex = n);
     }
-
     function startAutoSlide() {
       autoSlide = setInterval(function() {
         plusSlides(1);
       }, 5000);
     }
-
     function stopAutoSlide() {
       clearInterval(autoSlide);
     }
     showSlides(slideIndex);
     startAutoSlide();
-
   </script>
-
-
-
-
-  <!-- footer here  -->
-
- 
-
-
-
-
-
-
-
-
 </body>
 </html>
