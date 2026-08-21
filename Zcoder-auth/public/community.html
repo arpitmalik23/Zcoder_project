@@ -95,7 +95,7 @@
     // Load existing posts from backend
     async function loadPosts() {
       try {
-        const res = await fetch("http://localhost:5000/api/posts");
+        const res = await fetch("/api/posts");
         const posts = await res.json();
 
         postList.innerHTML = "";
@@ -124,7 +124,7 @@
 
       if (message) {
         try {
-          const res = await fetch("http://localhost:5000/api/posts", {
+          const res = await fetch("/api/posts", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
