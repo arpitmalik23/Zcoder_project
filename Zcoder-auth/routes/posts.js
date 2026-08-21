@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { authenticateToken } = require('../middleware/authMiddleware');
-const Post = require('../models/Post'); 
+const Post = require('../models/post'); 
 
 // Get all posts (no authentication needed)
 router.get('/', async (req, res) => {
