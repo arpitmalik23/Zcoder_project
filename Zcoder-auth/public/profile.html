@@ -128,7 +128,7 @@
 
     async function loadProfile() {
         try {
-          const res = await fetch("http://localhost:5000/api/profile", {
+          const res = await fetch("/api/profile", {
             method: "GET",
             headers: { "Authorization": "Bearer " + token },
           });
@@ -151,7 +151,7 @@
             document.getElementById("emailDisplay").textContent = data.email;
             document.getElementById("nameInput").value = data.name || "";
             const profileImage = data.profileImage
-                ? `http://localhost:5000/uploads/${data.profileImage}`
+                ? `/uploads/${data.profileImage}`
                 : "./th.jpeg";
               document.getElementById("profileImage").src = profileImage + `?t=${Date.now()}`;
 
@@ -177,7 +177,7 @@
       }
 
       try {
-        const res = await fetch("http://localhost:5000/api/profile", {
+        const res = await fetch("/api/profile", {
           method: "PUT",
           headers: { Authorization: "Bearer " + token },
           body: formData,
