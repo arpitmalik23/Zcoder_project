@@ -1,0 +1,8 @@
+{
+  "name": "zcoder-project",
+  "private": true,
+  "workspaces": ["Zcoder-auth"],
+  "scripts": {
+    "start": "npm --workspace Zcoder-auth start"
+  }
+}

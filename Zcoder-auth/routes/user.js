@@ -4,11 +4,15 @@ const User = require('../models/User');
 const { authenticateToken } = require("../middleware/authMiddleware");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
+const uploadDirectory = path.join(__dirname, "..", "public", "uploads");
 
 // Multer setup for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/uploads/");
+    fs.mkdir(uploadDirectory, { recursive: true }, (err) => {
+      cb(err, uploadDirectory);
+    });
   },
   filename: function (req, file, cb) {
     const uniqueName = Date.now() + path.extname(file.originalname);

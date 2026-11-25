@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
 
 
 dotenv.config();
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 
 app.use(express.json());
@@ -35,16 +36,25 @@ app.use('/api/posts', postRoutes);
 
 app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
 
+if (!process.env.MONGO_URI) {
+  console.error("Missing MONGO_URI. Set it in the hosting environment or Zcoder-auth/.env.");
+  process.exit(1);
+}
+
 mongoose.connect(process.env.MONGO_URI)
 
 
 .then(() => {
   console.log("MongoDB Connected");
-  app.listen(process.env.PORT, () => {
-    console.log(`Server running on port ${process.env.PORT}`);
+  const port = process.env.PORT || 5000;
+  app.listen(port, "0.0.0.0", () => {
+    console.log(`Server running on port ${port}`);
   });
 })
-.catch((err) => console.log(err));
+.catch((err) => {
+  console.error("MongoDB connection failed:", err.message);
+  process.exit(1);
+});
 
 
 // const express = require('express');
